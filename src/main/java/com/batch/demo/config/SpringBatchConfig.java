@@ -36,7 +36,6 @@ public class SpringBatchConfig {
         itemReader.setLinesToSkip(1);
         itemReader.setLineMapper(lineMapper());
         return itemReader;
-
     }
 
     private LineMapper<Customer> lineMapper() {
@@ -49,7 +48,6 @@ public class SpringBatchConfig {
         fieldSetMapper.setTargetType(Customer.class);
         defaultLineMapper.setLineTokenizer(delimitedLineTokenizer);
         defaultLineMapper.setFieldSetMapper(fieldSetMapper);
-
         return defaultLineMapper;
     }
 
@@ -60,7 +58,6 @@ public class SpringBatchConfig {
 
     @Bean
     public RepositoryItemWriter<Customer> writer(){
-
         RepositoryItemWriter<Customer> writer = new RepositoryItemWriter<>();
         writer.setRepository(customerRepository);
         writer.setMethodName("save");

@@ -1,10 +1,6 @@
 package com.batch.demo.controller;
 
-import org.springframework.batch.core.*;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
-import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRestartException;
+import com.batch.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,21 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
     @Autowired
-    private JobLauncher jobLauncher;
-
-    @Autowired
-    private Job job;
+    private CustomerService customerService;
 
     @PostMapping("/importCSV")
-    public void importCSV(){
-
-        JobParameters jobParameters = new JobParametersBuilder().addLong("startAt",System.currentTimeMillis()).toJobParameters();
-
-        try{
-            jobLauncher.run(job,jobParameters);
-        } catch (JobInstanceAlreadyCompleteException | JobExecutionAlreadyRunningException |
-                 JobParametersInvalidException | JobRestartException e) {
-            throw new RuntimeException(e);
-        }
+    public String importCSV() {
+        return customerService.upload();
     }
 }
